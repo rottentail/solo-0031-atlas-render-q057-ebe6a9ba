@@ -1,0 +1,27 @@
+{
+  "case": "transparent-asset",
+  "derivedFrom": "fixed-input.json",
+  "change": "在固定输入上叠加一个引用 alpha-badge 素材的位图图层，用于复核半透明像素的严格比较；badge-nudge 仅把同一素材位移 1 像素",
+  "assetId": "alpha-badge",
+  "imageLayer": {
+    "id": "badge",
+    "kind": "image",
+    "width": 64,
+    "height": 64,
+    "assetId": "alpha-badge",
+    "opacity": 1,
+    "transform": {
+      "x": 32,
+      "y": 120,
+      "scaleX": 1,
+      "scaleY": 1
+    }
+  },
+  "nudgeLayer": {
+    "id": "badge",
+    "transform": {
+      "x": 33,
+      "y": 120
+    }
+  }
+}

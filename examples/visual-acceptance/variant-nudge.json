@@ -1,0 +1,11 @@
+{
+  "case": "nudge-geometry",
+  "derivedFrom": "fixed-input.json",
+  "change": "仅将 plate 图层 transform.x 由 45 改为 46（1 输出像素位移），颜色与其余几何不变",
+  "documentPatch": {
+    "layerId": "plate",
+    "transform": {
+      "x": 46
+    }
+  }
+}

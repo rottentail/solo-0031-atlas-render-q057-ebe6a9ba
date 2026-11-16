@@ -21,6 +21,8 @@
 | GET /artifacts/{id} | 可选If-None-Match | PNG，200或304 |
 | DELETE /artifacts/{id} | 无 | state，200 |
 | POST /compare | left, right（结果ID） | 像素比较，200 |
+
+`/v1/compare` 解码两张结果 PNG，逐像素逐通道（含 alpha）返回 `changedPixels`、`maxDelta`、`meanDelta` 和尺寸；没有容差或阈值参数，不返回通过/不通过，`changedPixels` 非零即表示存在像素差异。只接受本服务存活的结果 ID，不能上传外部图片；尺寸不同返回 409，任一结果已清理返回 410。字节身份（PNG 摘要相等）、解码像素一致与肉眼可接受是三个独立结论，视觉验收的取证与停止规则见 `visual-acceptance.md`。
 | GET /status | 无 | 场景/素材/快照/任务计数和结果字节数 |
 | GET /events | 无 | 最多500个有序领域事件 |
 

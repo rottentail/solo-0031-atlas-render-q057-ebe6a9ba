@@ -1,0 +1,8 @@
+{
+  "case": "recolor-background",
+  "derivedFrom": "fixed-input.json",
+  "change": "仅将背景由 #F5F1E8 改为 #F0F1E8（每通道差约 5），几何与图层不变",
+  "documentPatch": {
+    "background": "#F0F1E8"
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "fixtures": {
+    "fixed-input.json": {
+      "sha256": "2058f41ad4513ca4d5a48d20aab10b930fc5315a00744448e399ee6d16ea83d7",
+      "bytes": 2097
+    },
+    "variant-recolor.json": {
+      "sha256": "e1149fdd80185a1229d2caaf1fa42a805e6547a00dbba7e090bd69157ea4361f",
+      "bytes": 227
+    },
+    "variant-nudge.json": {
+      "sha256": "3ac2c7acfa1cee8f402053263425a9abde6d5f22d7cc4f1fbca74c68a50e9e81",
+      "bytes": 277
+    },
+    "variant-alpha.json": {
+      "sha256": "360cf23be5659895ff04e63926a6d01b7d4706ab2da01f9471ea13b6fdc97804",
+      "bytes": 614
+    }
+  },
+  "cases": [
+    {
+      "id": "A-byte-identity",
+      "title": "同一固定输入重新渲染：字节身份成立",
+      "artifacts": [
+        "case-a-render-1.png"
+      ],
+      "snapshotId": "snap-00000002",
+      "snapshotDigest": "9aed87cc100189522c0a48cb2ae3b16c7426f57261e9ecb94ad5a2865fb3d3d9",
+      "replayJobId": "job-00000003",
+      "replaySameJob": true,
+      "replayArtifactId": "png-00000005",
+      "render1": {
+        "sha256": "8a3afec879d3fe1029abea6062fa4d1e9c3fc39e62d088cb8ce67245de086e74",
+        "bytes": 7060
+      },
+      "render2": {
+        "sha256": "8a3afec879d3fe1029abea6062fa4d1e9c3fc39e62d088cb8ce67245de086e74",
+        "bytes": 7060
+      },
+      "byteIdentical": true,
+      "compare": {
+        "width": 320,
+        "height": 240,
+        "changedPixels": 0,
+        "maxDelta": 0,
+        "meanDelta": 0
+      },
+      "verdict": "tier1-byte-identical"
+    },
+    {
+      "id": "B-recompress-pixel-equal",
+      "title": "仅重压缩：字节身份不成立，解码像素一致",
+      "artifacts": [
+        "case-a-render-1.png",
+        "case-b-recompress-level9.png",
+        "case-b-recompress-level1.png"
+      ],
+      "original": {
+        "sha256": "8a3afec879d3fe1029abea6062fa4d1e9c3fc39e62d088cb8ce67245de086e74",
+        "bytes": 7060
+      },
+      "level9": {
+        "sha256": "9a1efe1787415d87f46951fb255f9b1d2ecb3c695ca0a05c4702602f8c78f75f",
+        "bytes": 3896
+      },
+      "level1": {
+        "sha256": "0b4a151b711941cee20188263bfceb536559c3d67003420061cba4ca97f814ed",
+        "bytes": 8860
+      },
+      "byteIdentical": false,
+      "decodedPixelsIdentical": true,
+      "serverCompareAvailable": false,
+      "serverCompareReason": "/v1/compare 只接受服务端结果 ID，外部重压缩文件无法提交",
+      "verdict": "tier2-pixel-equal-only"
+    },
+    {
+      "id": "C-small-edits",
+      "title": "背景微改与 1 像素位移：像素级均判为变更，没有容差通过",
+      "artifacts": [
+        "case-a-render-1.png",
+        "case-c-recolor-background.png",
+        "case-c-nudge-1px.png"
+      ],
+      "recolor": {
+        "snapshotDigest": "2fa131015cd06ce6e3f309368a54cecc65f5d5613a61121d7d1ea99024c7148d",
+        "pngDigest": "780aff36b5d08e6caab18c7b3cada134df232bd8823e95d68ae873cfba4c900b",
+        "compareAgainstBase": {
+          "width": 320,
+          "height": 240,
+          "changedPixels": 43800,
+          "maxDelta": 5,
+          "meanDelta": 0.6673828125
+        }
+      },
+      "nudge": {
+        "snapshotDigest": "5c5d12148fd23d6611b41a5446e80c7c7b51714f1b4935a7f044e52f1d693fcc",
+        "pngDigest": "fdb29c7db36a6ec9fec804dfaa14ca9dbbd6976a5956fd2d1605bdfd9e6840cc",
+        "compareAgainstBase": {
+          "width": 320,
+          "height": 240,
+          "changedPixels": 10200,
+          "maxDelta": 225,
+          "meanDelta": 0.3981477864583333
+        }
+      },
+      "serverHasToleranceParameter": false,
+      "verdict": "tier3-human-review-required"
+    },
+    {
+      "id": "D-transparent-asset",
+      "title": "透明素材合成与位移：alpha 通道逐通道参与严格比较",
+      "artifacts": [
+        "case-d-alpha-badge.png",
+        "case-d-alpha-composite.png",
+        "case-d-alpha-nudge-1px.png"
+      ],
+      "asset": {
+        "id": "alpha-badge",
+        "digest": "05d05f2ae27d32825ee7959bca6bddbb0ddcf5d76e1ad251c3ef8a601603bf0a",
+        "width": 16,
+        "height": 16
+      },
+      "composite": {
+        "pngDigest": "3afa5d4e56743cd55d70c5455d559196271cba297c03da8d4093699a7c51815b",
+        "compareAgainstBase": {
+          "width": 320,
+          "height": 240,
+          "changedPixels": 2752,
+          "maxDelta": 57,
+          "meanDelta": 0.39526692708333333
+        }
+      },
+      "nudge": {
+        "pngDigest": "3745b7dfe9c41f2958a80080de26c768f392fc2eda37ebbeb91ad65a6c0a8e52",
+        "compareAgainstComposite": {
+          "width": 320,
+          "height": 240,
+          "changedPixels": 744,
+          "maxDelta": 13,
+          "meanDelta": 0.025940755208333333
+        }
+      },
+      "verdict": "tier3-human-review-required"
+    }
+  ],
+  "stopRules": {
+    "purgedArtifactId": "png-00000005",
+    "downloadStatusAfterPurge": 410,
+    "downloadError": {
+      "code": "gone",
+      "error": "artifact png-00000005 was purged"
+    },
+    "compareStatusAfterPurge": 410,
+    "compareError": {
+      "code": "gone",
+      "error": "artifact png-00000005 was purged"
+    },
+    "jobStateBefore": "succeeded",
+    "jobStateAfter": "succeeded",
+    "jobArtifactLinkKept": true,
+    "retainedEvidence": [
+      "job 记录（state=succeeded、artifactId、attempt、snapshotId、scale）",
+      "artifact 记录（id、jobId、width、height、digest、state=purged）",
+      "快照摘要 snapshotDigest 与固定输入闭包",
+      "领域事件（截断前的 job.succeeded / artifact.purged）"
+    ],
+    "lostEvidence": [
+      "PNG 字节本体，无法再次下载、解码或像素比较"
+    ],
+    "mustStop": "字节清理后不得再对该结果给出像素通过或视觉通过结论；只能引用清理前留存的摘要与既有判定记录。"
+  }
+}

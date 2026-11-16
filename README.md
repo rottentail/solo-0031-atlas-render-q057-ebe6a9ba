@@ -27,6 +27,14 @@ python3 scripts/walkthrough.py --workflow compare-renders
 
 脚本在临时状态目录启动实际服务，通过 HTTP 完成操作后停止服务，输出任务状态和 PNG 摘要；`--out` 保存可查看的合成示例。恢复流程会强制结束脚本自己启动的服务进程，再验证恢复结果。所有工作流编号见 `.project-manifest.json`。
 
+## 视觉验收
+
+“同一张图”分三个不能互相替代的结论：PNG 字节身份（L1）、解码后像素一致（L2）、肉眼可接受（L3）。`POST /v1/compare` 只提供逐像素差异指标，没有容差参数，也不产生通过结论；结果字节清理后只能保留摘要与任务事实，必须停止给出像素/视觉通过结论。完整规则、实测图片和停止条件见 [`docs/visual-acceptance.md`](docs/visual-acceptance.md)，可用下面的命令沿同一份固定输入重新生成全部证据：
+
+```sh
+python3 -I scripts/visual_acceptance.py
+```
+
 ## 场景到结果
 
 1. `PUT /v1/scenes/emblem`，提交名称、`expectedRevision: 0` 和 `document`。示例见 `examples/emblem.json`。
